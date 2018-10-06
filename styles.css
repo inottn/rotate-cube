@@ -1,0 +1,71 @@
+.cube-group {
+  display: flex;
+  justify-content: space-around;
+}
+
+.cube-container {
+  perspective: 2000px;
+  margin: 40px;
+}
+
+.cube {
+  position: relative;
+  transform-style: preserve-3d;
+}
+
+.cube-surface {
+  position: absolute;
+  font-size: 60px;
+  text-align: center;
+  line-height: 120px;
+}
+
+.cube-surface-1 {
+  background: rgba(145, 214, 184, 0.5);
+  transform: translateZ(100px);
+}
+
+.cube-surface-2 {
+  background: rgba(245, 147, 211, 0.5);
+  transform: rotateY(-90deg) translateZ(100px);
+}
+
+.cube-surface-3 {
+  background: rgba(126, 165, 184, 0.5);
+  transform: rotateX(90deg) translateZ(100px);
+}
+
+.cube-surface-4 {
+  background: rgba(178, 123, 184, 0.5);
+  transform: rotateX(-90deg) translateZ(100px);
+}
+
+.cube-surface-5 {
+  background: rgba(196, 201, 150, 0.5);
+  transform: rotateY(90deg) translateZ(100px);
+}
+
+.cube-surface-6 {
+  background: rgba(245, 86, 184, 0.5);
+  transform: rotateY(180deg) translateZ(100px);
+}
+
+.range-group {
+  width: 200px;
+  margin: 50px auto 0;
+  font-size: 18px;
+}
+
+.range-group input {
+  width: 200px;
+  margin: 0 0 10px;
+}
+
+.buttons {
+  width: 120px;
+  margin: 10px auto 0;
+}
+
+button {
+  margin: 0 7px;
+}

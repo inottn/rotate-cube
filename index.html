@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>rotating cube</title>
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="shortcut icon" href="./icon.png" type="image/x-icon">
+</head>
+
+<body>
+  <div class="cube-group">
+    <div class="cube-container cube-container1"></div>
+    <div class="cube-container cube-container2"></div>
+  </div>
+
+  <div class="range-group">
+    <span>rotateX : 0deg</span>
+    <input type="range" min="0" max="2000" value="0" />
+    <span>rotateY : 0deg</span>
+    <input type="range" min="0" max="2000" value="0" />
+    <span>rotateZ : 0deg</span>
+    <input type="range" min="0" max="2000" value="0" />
+  </div>
+  <div class="buttons">
+    <button class="random-btn">随机</button>
+    <button class="reset-btn">重置</button>
+  </div>
+
+  <script src="./src/cube.js"></script>
+  <script src="./src/index.js"></script>
+</body>
+
+</html>

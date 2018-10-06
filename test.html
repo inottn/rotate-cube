@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>rotate cube</title>
+  <style type="text/css">
+    #demo {
+      perspective: 2000px;
+    }
+
+    .cube {
+      position: relative;
+      width: 200px;
+      height: 200px;
+      margin: 100px auto 0;
+      transform-style: preserve-3d;
+      /* transition: transform 2s; */
+    }
+
+    .cube-surface {
+      height: 200px;
+      width: 200px; /* 1 6 3 4 translateZ(h / 2) 2 5 translateZ(w / 2) */
+      position: absolute;
+      font-size: 60px;
+      text-align: center;
+      line-height: 200px;
+    }
+
+    .cube-surface-1 {
+      background: rgba(145, 214, 184, 0.5);
+      transform: translateZ(100px);
+    }
+
+    .cube-surface-2 {
+      background: rgba(245, 147, 211, 0.5);
+      transform: rotateY(-90deg) translateZ(100px);
+    }
+
+    .cube-surface-3 {
+      background: rgba(126, 165, 184, 0.5);
+      transform: rotateX(90deg) translateZ(100px);
+    }
+
+    .cube-surface-4 {
+      background: rgba(178, 123, 184, 0.5);
+      transform: rotateX(-90deg) translateZ(100px);
+    }
+
+    .cube-surface-5 {
+      background: rgba(196, 201, 150, 0.5);
+      transform: rotateY(90deg) translateZ(100px);
+    }
+
+    .cube-surface-6 {
+      background: rgba(245, 86, 184, 0.5);
+      transform: rotateY(180deg) translateZ(100px);
+    }
+
+    #ran {
+      width: 200px;
+      margin: 50px auto 0;
+      font-size: 18px;
+    }
+
+    #ran input {
+      width: 200px;
+      margin: 0 0 10px;
+    }
+
+    .buttons {
+      width: 120px;
+      margin: 10px auto 0;
+    }
+
+    button {
+      margin: 0 7px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="demo">
+    <div class="cube">
+      <div class="cube-surface cube-surface-1">1</div>
+      <div class="cube-surface cube-surface-2">2</div>
+      <div class="cube-surface cube-surface-3">3</div>
+      <div class="cube-surface cube-surface-4">4</div>
+      <div class="cube-surface cube-surface-5">5</div>
+      <div class="cube-surface cube-surface-6">6</div>
+    </div>
+  </div>
+  <div id="ran">
+    <span>rotateX : 0deg</span>
+    <input type="range" min="0" max="360" value="0" />
+    <span>rotateX : 0deg</span>
+    <input type="range" min="0" max="360" value="0" />
+    <span>rotateX : 0deg</span>
+    <input type="range" min="0" max="360" value="0" />
+  </div>
+  <div class="buttons">
+    <button class="random-btn">随机</button>
+    <button class="reset-btn">重置</button>
+  </div>
+
+  <script type="text/javascript">
+    let cube = document.querySelector('.cube'),
+        input = document.getElementsByTagName('input'),
+        random = document.querySelector('.random-btn'),
+        reset = document.querySelector('.reset-btn'),
+        span = document.getElementsByTagName('span'),
+        timer1 = null,
+        timer2 = null
+
+    for (let i = 0; i < input.length; i++) {
+      let ix = "", iy = "", iz = ""
+
+      input[i].addEventListener('input', () => {
+        ix = input[0].value
+        iy = input[1].value
+        iz = input[2].value
+
+        cube.style.transform = `rotateX(${ix}deg) rotateY(${iy}deg) rotateZ(${iz}deg)`
+        span[0].innerHTML = `rotateX:${ix}deg`
+        span[1].innerHTML = `rotateY:${iy}deg`
+        span[2].innerHTML = `rotateZ:${iz}deg`
+      })
+    }
+
+    let changeCubeStyle = (speed1, speed2, speed3) => {
+      input[0].value = parseInt(input[0].value) + speed1
+      input[1].value = parseInt(input[1].value) + speed2
+      input[2].value = parseInt(input[2].value) + speed3
+
+      cube.style.transform = `rotateX(${input[0].value}deg) rotateY(${input[1].value}deg) rotateZ(${input[2].value}deg)`
+      span[0].innerHTML = `rotateX : ${input[0].value}deg`
+      span[1].innerHTML = `rotateY : ${input[1].value}deg`
+      span[2].innerHTML = `rotateZ : ${input[2].value}deg`
+    }
+
+    random.onclick = function () {
+      //获取随机目标值
+      clearInterval(timer2)
+      clearInterval(timer1)
+
+      let ox = Math.round(Math.random() * 360),
+          oy = Math.round(Math.random() * 360),
+          oz = Math.round(Math.random() * 360)
+
+      console.log(ox, oy, oz)
+      //得到值改变速度
+      timer1 = setInterval(function () {
+        if (input[0].value < ox ? input[0].value >= ox : input[0].value <= ox)
+          clearInterval(timer1)
+
+        let speed1 = input[0].value < ox ? Math.ceil((ox - input[0].value) / 10) : Math.floor((ox - input[0].value) / 10),
+            speed2 = input[0].value < ox ? Math.ceil((oy - input[1].value) / 10) : Math.floor((oy - input[1].value) / 10),
+            speed3 = input[0].value < ox ? Math.ceil((oz - input[2].value) / 10) : Math.floor((oz - input[2].value) / 10)
+        
+        changeCubeStyle(speed1, speed2, speed3)
+      }, 20)
+    }
+
+    reset.onclick = function () {
+      clearInterval(timer1)
+      clearInterval(timer2)
+      timer2 = setInterval(function () {
+        if (input[0].value == 0 && input[1].value == 0 && input[2].value == 0) {
+          clearInterval(timer2);
+        }
+
+        let rspeed1 = Math.ceil(input[0].value / 10),
+            rspeed2 = Math.ceil(input[1].value / 10),
+            rspeed3 = Math.ceil(input[2].value / 10)
+
+        changeCubeStyle(-rspeed1, -rspeed2, -rspeed3)
+      }, 20);
+    }
+  </script>
+</body>
+
+</html>
